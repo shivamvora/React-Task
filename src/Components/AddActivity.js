@@ -1,10 +1,26 @@
 import React, {useState} from 'react'
+import {useDispatch} from "react-redux";
 
 function AddActivity() {
-    const [data,setData] = useState({});
+    const dispatch = useDispatch();
+    const [data,setData] = useState({
+        name:"",
+        duration:""
+    });
 
     const handleChange = (e) => {
+        
         setData(prev => ({...prev, [e.target.name]: e.target.value}))
+        
+    }
+    const addActivity = () => { 
+            dispatch({
+                type: "CREATE_ACTIVITY",
+                payload:{
+                    name: data.name,
+                    duration: data.duration
+                }
+            })
     }
     return (
         <div className={"add"}>
@@ -17,7 +33,7 @@ function AddActivity() {
                 <p>Duration:</p>
                 <input onChange={handleChange} name={"duration"} placeholder={"Activity Name....."}/>
             </div>
-            
+                <button onClick={addActivity}>Add Activity</button>            
         </div>
     )
 }
